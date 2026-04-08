@@ -1,0 +1,5 @@
+{
+  "name": "collanote-worker",
+  "private": true,
+  "type": "module"
+}

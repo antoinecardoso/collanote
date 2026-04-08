@@ -1,0 +1,18 @@
+name = "collanote-api"
+main = "src/index.js"
+compatibility_date = "2024-12-01"
+compatibility_flags = ["nodejs_compat"]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "collanote-db"
+database_id = "44c6e096-7612-40a2-8d4c-58e6e9af458a"
+
+[durable_objects]
+bindings = [
+  { name = "REALTIME", class_name = "RealtimeHub" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["RealtimeHub"]

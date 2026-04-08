@@ -13,7 +13,7 @@ import EffectToasts from '../components/EffectToasts'
 import WelcomeScreen from '../components/WelcomeScreen'
 import { createSlashExtension } from '../components/SlashCommands'
 import { createMentionSuggestion } from '../components/MentionSuggestion'
-import { getSocket, useSocket } from '../hooks/useSocket'
+import { getSocket, useSocket, apiFetch } from '../hooks/useSocket'
 import useKonamiCode from '../hooks/useKonamiCode'
 
 export default function EditorPage({ user, token, onLogout }) {
@@ -29,7 +29,7 @@ export default function EditorPage({ user, token, onLogout }) {
 
   // Fetch users + note
   useEffect(() => {
-    fetch('/api/users').then(r => r.json()).then(setAllUsers)
+    apiFetch('/api/users').then(setAllUsers)
     const socket = getSocket()
     socket.emit('user-join', user)
     return () => socket.disconnect()
@@ -81,7 +81,7 @@ export default function EditorPage({ user, token, onLogout }) {
     clearTimeout(saveTimer.current)
     setSaved(false)
     saveTimer.current = setTimeout(() => {
-      fetch('/api/note', {
+      apiFetch('/api/note', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content, userId: user.id }),
@@ -117,7 +117,7 @@ export default function EditorPage({ user, token, onLogout }) {
   // Load initial note content
   useEffect(() => {
     if (!editor) return
-    fetch('/api/note').then(r => r.json()).then(note => {
+    apiFetch('/api/note').then(note => {
       if (note?.content) editor.commands.setContent(note.content)
     })
   }, [editor])

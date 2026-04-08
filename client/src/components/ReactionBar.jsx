@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useSocket } from '../hooks/useSocket'
+import { useSocket, apiFetch } from '../hooks/useSocket'
 
 const EMOJIS = ['👍', '🔥', '💡', '❓', '❤️', '✅']
 
@@ -7,7 +7,7 @@ export default function ReactionBar({ user }) {
   const [reactions, setReactions] = useState([])
   const [bouncing, setBouncing] = useState(null)
 
-  useEffect(() => { fetch('/api/reactions').then(r => r.json()).then(setReactions) }, [])
+  useEffect(() => { apiFetch('/api/reactions').then(setReactions) }, [])
 
   useSocket('reactions-updated', (data) => {
     setReactions(data)
@@ -17,9 +17,8 @@ export default function ReactionBar({ user }) {
   })
 
   async function toggle(emoji) {
-    await fetch('/api/reactions', {
+    await apiFetch('/api/reactions', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ user_id: user.id, emoji }),
     })
   }
