@@ -1,23 +1,23 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
+import EditorPage from './pages/EditorPage'
 
 export default function App() {
-  const [user, setUser] = useState(() => {
-    const saved = localStorage.getItem('collanote-user')
-    return saved ? JSON.parse(saved) : null
+  const [auth, setAuth] = useState(() => {
+    const s = localStorage.getItem('collanote-auth')
+    return s ? JSON.parse(s) : null
   })
 
-  function handleLogin(userData) {
-    localStorage.setItem('collanote-user', JSON.stringify(userData))
-    setUser(userData)
+  function handleLogin(data) {
+    localStorage.setItem('collanote-auth', JSON.stringify(data))
+    setAuth(data)
   }
 
   function handleLogout() {
-    localStorage.removeItem('collanote-user')
-    setUser(null)
+    localStorage.removeItem('collanote-auth')
+    setAuth(null)
   }
 
-  if (!user) return <Login onLogin={handleLogin} />
-  return <Dashboard user={user} onLogout={handleLogout} />
+  if (!auth) return <Login onLogin={handleLogin} />
+  return <EditorPage user={auth.user} onLogout={handleLogout} />
 }

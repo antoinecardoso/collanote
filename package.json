@@ -1,20 +1,21 @@
 {
   "name": "collanote",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "server": "node server/index.js",
     "client": "cd client && npm run dev",
-    "install-all": "npm install && cd client && npm install",
-    "build": "cd client && npm install && npm run build",
+    "setup": "node server/setup.js",
     "start": "node server/index.js"
   },
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "better-sqlite3": "^11.7.0",
+    "concurrently": "^9.1.0",
     "cors": "^2.8.5",
     "express": "^4.21.0",
-    "socket.io": "^4.8.0",
-    "concurrently": "^9.1.0"
+    "jsonwebtoken": "^9.0.2",
+    "socket.io": "^4.8.0"
   }
 }
